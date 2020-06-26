@@ -1,0 +1,375 @@
+<!--
+    Copyright 2016-2019 Seeing-Theory
+
+    Modifications Copyright (C) 2020 sheronw1174@gmail.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="chapter" content="bp">
+
+    <!-- For Facebook Sharing -->
+    <meta property="og:url" content="http://students.brown.edu/seeing-theory/basic-probability/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Basic Probability" />
+    <meta property="og:description" content="This chapter is an introduction to the basic concepts of probability theory." />
+    <meta property="og:image" content="http://students.brown.edu/seeing-theory/img/share/1.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+
+
+    <title>Measure Disease Frequency - Seeing Epidemiology</title>
+    <!-- CSS Imports -->
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+    <!--Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="../img/favicon.png" />
+    <!-- General Chapter -->
+    <link rel="stylesheet" type="text/css" href="../css/chapter-style.css">
+    <!-- Specific Chapter -->
+    <link rel="stylesheet" type="text/css" href="Measure-Disease-Frequency.css">
+    <!-- JavaScript Imports -->
+    <!-- D3 -->
+    <script src="../js/d3.min.js"></script>
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- jstat -->
+    <script src="../js/jstat.min.js"></script>
+    <!-- MathJax -->
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- Tool Tip -->
+    <script src="../js/d3.tip.v0.6.3.js"></script>
+    <!-- General Chapter -->
+    <script src="../js/chapter.js"></script>
+    <!-- D3 Hexbin -->
+    <script src="../js/d3.hexbin.min.js"></script>
+    <!-- Visualizations -->
+    <script src="Measure-Disease-Frequency.js"></script>
+    <!-- Google Analytics -->
+    <script>
+/*
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-85617614-1', 'auto');
+    ga('send', 'pageview');
+*/
+
+    </script>
+</head>
+
+<body id='1'>
+    <div id="share-modal"></div>
+    <div class="header">
+        <div class="progress-bar">
+            <div class="progress-bar-color"></div>
+        </div>
+        <div class="header-wrapper">
+            <ul class="chapter-nav">
+                <li>
+                    <span onclick="openNav()" id="hamburger">&#9776; </span>
+                </li>
+                <!--<li><a href="../index.html" id="seeing-epidemiology">Seeing Epidemiology</a></li>-->
+                <li><a onclick='toTop()' id='display-chapter'>Chapter 1: Measure Disease Frequency</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-left">
+        <div class="col-left-wrapper">
+
+            <div id="section0">
+                <div class="chapter-intro">
+                    <h4>Chapter 1</h4>
+                    <h1>Measure Disease Frequency</h1>
+                    <p>This chapter explains some terms that describe the frequency of disease.</p>
+                </div>
+                <div class="scroll-down"> <img src="../img/button/bottom-arrow.svg"></div>
+            </div>
+
+            <div id="section1">
+                <div class="unit">
+                    <h3>Prevalence and Incidence</h3>
+                    <p>When talking about the epidemic, <em>prevalence</em> will be one of the most common term in daily life. It is pretty easy to calculate the prevalence, which is the proportion of a particular population that founded to be affected by a medical condition at a given time. Even prevalence could be used to describe an epidemic, it might also describe some non-infectious disease such as heart disease, or even risk factors such as smoking.</p>  
+                    <span id="centered">$$\text{Prevalence} = \frac{\text{number with the disease}}{\text{population size}}$$</span>
+                    <p><em>Incidence</em> (or <em>Incidence Risk</em>), correspondingly, is the proportion of new cases in the population that is at risk of a medical condition (not affected yet) at a given time. Generally prevalence indicates how widespread of the disease, while incidence indicates the spreading in a given time period.</p>
+                    <span id="centered">$$\text{Incidence} = \frac{\text{number of new cases of disease}}{\text{population size at risk}}$$</span>
+                    <div class="interactive-wrapper">
+                        <div id="controlHex">
+                            <div class="button-1" id="startHex">Submit</div>
+                            <div class="button-1" id="resetHex">Reset</div>
+                        </div>
+                        <p>Click and drag hexagons to select new cases then press "Submit" to see the Prevalence and Incidence. (To make life easier, we ignore the possibilities of death and recovery here.)</p>
+                    </div>
+                    <div id="pre_inc_table_wrapper" class="col-xs-3">
+                        <table id="pre_inc" class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Prevalence</td>
+                                    <td>Incidence</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section2">
+                <div class="unit">
+                    <h3>Relationship Among Duration, Prevalence and Incidence Rate</h3>
+                    <p><em>Duration</em> is the time period that a case stays in the prevalent case pool. Bacause duration will vary from person to person, we usually use </em>average duration</em> for a certain disease in a population instead.</p>
+                    <p><em>Incidence Rate</em> is the average incidence in a given period of time.</p>
+                    <span id="centered">$$\text{Incidence Rate} = \frac{\text{incidence}}{\text{time period}}$$</span>
+                    <p>Prevalence(P) depends on the Incidence(I) and Duration(D):</p>
+                    <span id="centered">$$\frac{\text{P}}{\text{1-P}} \approx IR \times D$$</span>
+                    <p>If P is small enough then 1-P is close to 1, we have:</p>
+                    <span id="centered">$$P \approx IR \times D$$</span>
+                    <p>You could think about a pool with inflow and outflow. If incidence rate is the rate of inflow and duration is the time period for water staying in the pool, then the water level will indicate the prevalence.</p>
+                    <p>Suppose the total population is 100 and the visualization indicates final prevalence when incidence rate and duration rate is constant. You could drag bars below to adjust incidence rate and duration rate.</p>
+                    <div class="interactive-wrapper">
+                        <div id="inc_dur"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="section3">
+                <div class="unit">
+                    <h3>Case Fatality Rate</h3>
+                    <p>Besides of the frequency of affected, death could also be a factor when study the epidemic. For example, <em>Case Fatality Rate (CFR)</em> is the proportion of people with the condition who die in a given period of time. Similar to Incidence, which is the percentage of affected in the at-risk pool, Case fatality rate is the percentage of death in the affected pool.</p>
+                    
+                    <p>Intuitively, case fatality rate tells us how fatal a disease is. For example, the well-known Ebola virus has a case fatality rate from 83-90%. In the daily life, people usually describe the fatality of a given disease as "death rate", but in epidemiology death rate (or mortality rate) usually means the percentage of the people who die from a certain disease in a fixed population group such as nationality and race.</p>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="action-buttons">
+            <ul>
+                <a id="share-button" >
+
+                    <li class="inline-share">
+                        <i class="fa fa-share-square-o action-icon" aria-hidden="true"></i>Share
+                    </li>
+                    <li><div id="share-modal"></div></li>
+
+                </a>
+
+            </ul>
+        </div>
+        <a href="../SIR-Model/index.html">
+            <div class="chapter-footer" id="next-chapter-color">
+                <div class="chapter-footer-wrapper">
+                    <h4>Next</h4>
+                    <p id='next-chapter'>SIR Model → </p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-right">
+        <div class='language-setting'>
+            <select class="languageSetting">
+                <option selected>English</option>
+                <option data-url="cn.html">中文</option>
+            </select>
+        </div>
+        <div class="nav-section" id="section-0">
+            <div class="nav-unit-wrapper" id='one'>
+                <span class="nav-unit-title"> Prevalence and Incidence </span>
+            </div>
+            <div class="nav-unit-wrapper" id='two'>
+                <span class="nav-unit-title"> Relationship Among Duration, Prevalence and Incidence Rate </span>
+            </div>
+            <div class="nav-unit-wrapper" id='three'>
+                <span class="nav-unit-title"> Case Fatality Rate </span>
+            </div>
+        </div>
+        <div class="visualization-section" id="section-1">
+            <div class="visualization-wrapper" id="svgHex"></div>
+        </div>
+        <div class="visualization-section" id="section-2">
+            <div class="visualization-wrapper" id="svgPool"></div>
+        </div>
+    </div>
+    <div id="overlay">
+        <div class="modal-header">
+            <div class="closebtn" onclick="closeNav()">&times;</div>
+            <ul>
+                <li>
+                    <select class="languageSetting">
+                        <option selected>English</option>
+                        <option data-url="cn.html">中文</option>
+                    </select>
+                </li>
+                <!--<li><a href="../index.html">HOME</a></li>-->
+            </ul>
+        </div>
+        <!--
+        <div class="modal-wrapper">
+            <div class="modal-chapter">
+                <div id="chapter-text"><span>CHAPTER</span></div>
+                <ul class="modal-chapter-titles">
+                    <li id="bp-li" class="chapter-highlighted">Measure Disease Frequency</li>
+                    <li id="cp-li">SIR Model</li>
+                    <li id="pd-li">Exposure and Disease</li>
+                    <li id="fi-li">Outbreaks and Epidemics</li>
+                </ul>
+            </div>
+            <div class="modal-visualization">
+                <div id="bp" class="current">
+                    <div class="nav-unit-wrapper-s tile1">
+                        <img src="../img/tiles/1-1.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Chance Event </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile2">
+                        <span class="nav-unit-title-s"> Relationship Among Duration, Prevalence and Incidence Rate </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile3">
+                        <img src="../img/tiles/1-3.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Variance </span>
+                    </div>
+                </div>
+                <div id="cp">
+                    <div class="nav-unit-wrapper-s tile1">
+                        <img src="../img/tiles/2-1.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Set Theory </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile2">
+                        <img src="../img/tiles/2-2.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Counting </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile3">
+                        <img src="../img/tiles/2-3.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Conditional Probability </span>
+                    </div>
+                </div>
+                <div id="pd">
+                    <div class="nav-unit-wrapper-s tile1">
+                        <img src="../img/tiles/3-1.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Random Variable </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile2">
+                        <img src="../img/tiles/3-2.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Discrete and Continuous </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile3">
+                        <img src="../img/tiles/3-3.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Central Limit Theorem </span>
+                    </div>
+                </div>
+                <div id="fi">
+                    <div class="nav-unit-wrapper-s tile1">
+                        <img src="../img/tiles/4-1.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Point Estimation </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile2">
+                        <img src="../img/tiles/4-2.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Confidence Interval </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile3">
+                        <img src="../img/tiles/4-3.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> The Bootstrap </span>
+                    </div>
+                </div>
+                <div id="bi">
+                    <div class="nav-unit-wrapper-s tile1">
+                        <img src="../img/tiles/5-1.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Bayes' Theorem </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile2">
+                        <img src="../img/tiles/5-2.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Likelihood Function </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile3">
+                        <img src="../img/tiles/5-3.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Prior to Posterior </span>
+                    </div>
+                </div>
+                <div id="ra">
+                    <div class="nav-unit-wrapper-s tile1">
+                        <img src="../img/tiles/6-1.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Ordinary Least Squares </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile2">
+                        <img src="../img/tiles/6-2.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Correlation </span>
+                    </div>
+                    <div class="nav-unit-wrapper-s tile3">
+                        <img src="../img/tiles/6-3.png" class="nav-unit-tile-s">
+                        <span class="nav-unit-title-s"> Analysis of Variance </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+    </div>
+
+    <div id="share"></div>
+    <!-- Share CSS and JavaScript -->
+    <link rel="stylesheet" type="text/css" href="../css/jssocials.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jssocials-theme-flat.css" />
+    <script src="../js/jssocials.min.js"></script>
+    <script>
+       
+
+        $("#share").jsSocials({
+            // url: "_url_",
+            // _createShareLink: function(share) {
+            //     var $result = jsSocials.Socials.prototype._createShareLink.apply(this, arguments);
+            //     $result.on("click", function() {
+            //           // replace the your placeholder with actual url
+            //           var href = $result.attr("href");
+            //           $result.attr("href", href.replace("_url_", shareUrl));
+            //     });
+            //     return $result;
+            // },
+            showLabel: false,
+            showCount: false,
+            shareIn: "popup",
+            shares: ["email", "twitter", "facebook", "googleplus", "linkedin"]
+        });
+
+        
+
+        $(".languageSetting").change(function() {
+          var option = $(this).find('option:selected');
+          window.location.href = option.data("url");
+        });
+    </script>
+</body>
+
+</html>

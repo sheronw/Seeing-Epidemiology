@@ -1,0 +1,173 @@
+body {
+  background-color: #d6effa;
+}
+
+em {
+  font-weight: bold;
+}
+
+.header {
+  /*background-color: #F1F7FF;*/
+  background-color: #d6effa;
+  background: -webkit-linear-gradient(
+    rgba(214, 239, 250, 1),
+    rgba(214, 239, 250, 1),
+    rgba(214, 239, 250, 0)
+  );
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(
+    rgba(214, 239, 250, 1),
+    rgba(214, 239, 250, 1),
+    rgba(214, 239, 250, 0)
+  );
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(
+    rgba(214, 239, 250, 1),
+    rgba(214, 239, 250, 1),
+    rgba(214, 239, 250, 0)
+  );
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(
+    rgba(214, 239, 250, 1),
+    rgba(214, 239, 250, 1),
+    rgba(214, 239, 250, 0)
+  );
+  /* Standard syntax */
+}
+
+.col-left {
+  background-color: #d6effa;
+}
+
+.action-buttons ul a li:hover {
+  color: #1b92c4;
+}
+
+#next-chapter-color:hover {
+  background-color: #46c8b2;
+}
+
+.action-buttons ul {
+  border-top: 1px solid rgba(27, 146, 196, 0.2);
+}
+
+@media screen and (min-width: 750px) {
+  #bp {
+    display: block;
+  }
+
+  #cp,
+  #ra,
+  #pd,
+  #fi,
+  #bi {
+    display: none;
+  }
+}
+
+.progress-bar-color {
+  background-color: #1b92c4;
+}
+
+/*pre & inc*/
+.hexagon {
+  fill: white;
+  opacity: 0.6;
+  /*pointer-events: all;*/
+  cursor: pointer;
+}
+
+.hexagon path {
+  -webkit-transition: fill 250ms linear;
+  transition: fill 250ms linear;
+}
+
+/*.hexagon :hover {
+  opacity: 0.5
+}*/
+
+/*.hexagon .fill {
+  fill: #c7c7c7;
+}*/
+
+.mesh {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: 0.2;
+  pointer-events: none;
+}
+
+.border {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+  pointer-events: none;
+}
+
+#pre_inc {
+  cursor: pointer;
+}
+
+/*Relationship Among ...*/
+.inc {
+  fill: #f7c242;
+  stroke-width: 0;
+  stroke: #f7c242;
+}
+
+.dur {
+  fill: #b481bb;
+  stroke-width: 0;
+  stroke: #b481bb;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  stroke-width: 2;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-family: "Helvetica Neue";
+  font-size: 11px;
+  fill: black;
+}
+
+#focusLine {
+  fill: none;
+  stroke: black;
+  stroke-width: 1px;
+}
+
+/*responsive*/
+
+@media screen and (max-width: 680px) {
+  #dieWrapper,
+  #cardWrapper,
+  #coinWrapper {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .button-1 {
+    width: 6.5em;
+    font-size: 10px;
+    padding: 0.8em;
+  }
+
+  input[type="checkbox"] + label {
+    height: 3em;
+    padding: 8% 5%;
+  }
+
+  #centered {
+    font-size: 12px;
+  }
+
+  #left-mathjax {
+    font-size: 12px;
+  }
+}
