@@ -410,9 +410,11 @@ function cfr() {
     };
   });
 
-  var dots = svgPeople.selectAll("g.node").data(dotsdata).enter().append("g");
-
-  dots
+  var dots = svgPeople
+    .selectAll("g.node")
+    .data(dotsdata)
+    .enter()
+    .append("g")
     .append("use")
     .attr("xlink:href", "#person")
     .attr("y", (d) => Math.floor(d.num / 10) * 15 + 15)
@@ -440,9 +442,19 @@ function cfr() {
       0
     );
     const cfr = fatal / detected;
-    console.table({ detected, fatal, cfr });
     $("#detected").html("Current Detected Cases: " + detected);
     $("#fatal").html("Current Fatal Cases: " + fatal);
     $("#cfr").html("Current CFR: " + cfr);
   }
+
+  $("#resetCFR").on("click", function () {
+    //dotsdata.forEach((d) => Object.assign(d, { color: "black" }));
+    dots.each(function (d) {
+      d.color = "black";
+      d3.select(this).style("fill", d.color);
+    });
+    $("#detected").html("Current Detected Cases: " + 0);
+    $("#fatal").html("Current Fatal Cases: " + 0);
+    $("#cfr").html("Current CFR: " + "N/A");
+  });
 }
