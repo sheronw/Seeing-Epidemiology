@@ -119,20 +119,18 @@ function pre_inc() {
         d3.select(this).style("fill", "red");
       }
     });
-    addRow((old_cases + new_cases) / total, new_cases / old_cases);
+    addRow((old_cases + new_cases) / total, new_cases / (total - old_cases));
   });
 
   // handle reset event
   $("#resetHex").on("click", function () {
-    $("#pre_inc td").each(function () {
-      $(this).remove();
+    $("#pre_inc tr").each(function (i) {
+      if (i != 0) $(this).remove();
     });
-    $("#pre_inc").append(
-      "<tr><td>Prevalence</td><td>Incidence</td></tr><tr><td>0</td><td>0</td></tr>"
-    );
+    $("#pre_inc").append("<tr><td>0</td><td>0</td></tr>");
     hexagon.each(function (d) {
       if (d.fill) {
-        d.state = -1;
+        d.stateƒ = -1;
         d.fill = 0;
         d3.select(this)
           .style("fill", "white")
@@ -190,7 +188,8 @@ function relationship() {
 
   function slideBars() {
     // parameters
-    var labels = ["Incidence Rate(cases/day)", "Duration(days)"],
+
+    var labels = [$("#inc_dur").attr("label1"), $("#inc_dur").attr("label2")],
       probs = [5, 5];
 
     generate_pool(0, probs[0] * probs[1]);
@@ -442,9 +441,9 @@ function cfr() {
       0
     );
     const cfr = fatal / detected;
-    $("#detected").html("Current Detected Cases: " + detected);
-    $("#fatal").html("Current Fatal Cases: " + fatal);
-    $("#cfr").html("Current CFR: " + cfr);
+    $("#detected em").html(detected);
+    $("#fatal em").html(fatal);
+    $("#cfr em").html(cfr);
   }
 
   $("#resetCFR").on("click", function () {
@@ -453,8 +452,8 @@ function cfr() {
       d.color = "black";
       d3.select(this).style("fill", d.color);
     });
-    $("#detected").html("Current Detected Cases: " + 0);
-    $("#fatal").html("Current Fatal Cases: " + 0);
-    $("#cfr").html("Current CFR: " + "N/A");
+    $("#detected em").html("0");
+    $("#fatal em").html("0");
+    $("#cfr em").html("N/A");
   });
 }

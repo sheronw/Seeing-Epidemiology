@@ -3,6 +3,7 @@
 ## Reference
 
 [Essential Epidemiology](https://doi.org/10.1017/9781316275948)
+[基础流行病学](https://apps.who.int/iris/bitstream/handle/10665/1624/7117023244_CHI.pdf?sequence=1&isAllowed=y)
 
 ## Copyright and License
 
