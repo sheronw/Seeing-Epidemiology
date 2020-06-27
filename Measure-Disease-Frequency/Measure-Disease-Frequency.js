@@ -16,21 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-//Handles functionality of Probability
 $(window).load(function () {
   pre_inc();
   relationship();
-  //variance();
+  cfr();
 });
-
-//Cumulative Sum function for array
-function cumsum(array) {
-  var resultArray = [];
-  array.reduce(function (a, b, i) {
-    return (resultArray[i] = a + b.p);
-  }, 0);
-  return resultArray;
-}
 
 //*******************************************************************************//
 // Prevalence and Incidence
@@ -388,41 +378,6 @@ function relationship() {
           }
         });
       }
-
-      /*
-      dots.each(function (d, i) {
-        if (i < now) {
-          d3.select(this).style("fill", "#E87A90");
-          
-          var circle = svgPool
-            .append("circle")
-            .attr("r", radius)
-            .style("fill", "blue")
-            .attr("cx", (d % 100) * radius * 2 + radius)
-            .attr("cy", 0);
-
-          circle
-            .transition()
-            .duration(1000)
-            .ease("bounce")
-            .attr("cy", Math.floor(d / 100) * radius * 2 + radius)
-            .each("end", function () {
-              setTimeout(trans(this, i), 1000);
-            });
-
-          trans = (dropdot, index) => {
-            d3.select(dropdot).remove();
-            dots
-              .filter((d, i) => index == i)
-              .each(function (d, i) {
-                
-              });
-          };
-        } else {
-          d3.select(this).style("fill", "#BDC0BA");
-        }
-      });
-      */
     }
 
     // setup
@@ -434,5 +389,60 @@ function relationship() {
 }
 
 //*******************************************************************************//
-//Variance
+//CFR
 //*******************************************************************************//
+function cfr() {
+  var width = 5 * 2 * 10;
+  var height = 5 * 2 * 10;
+
+  var svgPeople = d3
+    .select("#svgPeople")
+    .append("svg")
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("viewBox", "0 0 " + width + " " + height)
+    .attr("preserveAspectRatio", "xMidYMid meet");
+
+  var dotsdata = new Array(50).fill(0).map((d, i) => {
+    return {
+      num: i,
+      color: "black",
+    };
+  });
+
+  var dots = svgPeople.selectAll("g.node").data(dotsdata).enter().append("g");
+
+  dots
+    .append("use")
+    .attr("xlink:href", "#person")
+    .attr("y", (d) => Math.floor(d.num / 10) * 15 + 15)
+    .attr("x", (d) => (d.num % 10) * 5 * 2 + 5)
+    .style("fill", (d) => d.color)
+    .on("click", handleClick)
+    .on("mouseover", function (d) {
+      // if not red (death) then clickable
+      if (d.color != "#E83015") d3.select(this).style("fill", "#BDC0BA");
+    })
+    .on("mouseout", function (d) {
+      d3.select(this).style("fill", d.color);
+    });
+
+  function handleClick(d) {
+    if (d.color != "#E83015")
+      d.color = d.color == "black" ? "#B5495B" : "#E83015";
+    d3.select(this).style("fill", d.color);
+    const detected = dotsdata.reduce(
+      (a, c) => (a += c.color != "black" ? 1 : 0),
+      0
+    );
+    const fatal = dotsdata.reduce(
+      (a, c) => (a += c.color == "#E83015" ? 1 : 0),
+      0
+    );
+    const cfr = fatal / detected;
+    console.table({ detected, fatal, cfr });
+    $("#detected").html("Current Detected Cases: " + detected);
+    $("#fatal").html("Current Fatal Cases: " + fatal);
+    $("#cfr").html("Current CFR: " + cfr);
+  }
+}

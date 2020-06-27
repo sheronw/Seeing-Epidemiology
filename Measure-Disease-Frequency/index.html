@@ -18,36 +18,53 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="chapter" content="bp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="chapter" content="bp" />
 
     <!-- For Facebook Sharing -->
-    <meta property="og:url" content="http://students.brown.edu/seeing-theory/basic-probability/" />
+    <meta
+      property="og:url"
+      content="http://students.brown.edu/seeing-theory/basic-probability/"
+    />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Basic Probability" />
-    <meta property="og:description" content="This chapter is an introduction to the basic concepts of probability theory." />
-    <meta property="og:image" content="http://students.brown.edu/seeing-theory/img/share/1.png" />
+    <meta
+      property="og:description"
+      content="This chapter is an introduction to the basic concepts of probability theory."
+    />
+    <meta
+      property="og:image"
+      content="http://students.brown.edu/seeing-theory/img/share/1.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-
-
 
     <title>Measure Disease Frequency - Seeing Epidemiology</title>
     <!-- CSS Imports -->
     <!--Fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700"
+      rel="stylesheet"
+    />
     <!--Font Awesome-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <!--Favicon-->
     <link rel="shortcut icon" type="image/png" href="../img/favicon.png" />
     <!-- General Chapter -->
-    <link rel="stylesheet" type="text/css" href="../css/chapter-style.css">
+    <link rel="stylesheet" type="text/css" href="../css/chapter-style.css" />
     <!-- Specific Chapter -->
-    <link rel="stylesheet" type="text/css" href="Measure-Disease-Frequency.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="Measure-Disease-Frequency.css"
+    />
     <!-- JavaScript Imports -->
     <!-- D3 -->
     <script src="../js/d3.min.js"></script>
@@ -57,7 +74,11 @@
     <!-- jstat -->
     <script src="../js/jstat.min.js"></script>
     <!-- MathJax -->
-    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"
+    ></script>
     <!-- Tool Tip -->
     <script src="../js/d3.tip.v0.6.3.js"></script>
     <!-- General Chapter -->
@@ -68,7 +89,7 @@
     <script src="Measure-Disease-Frequency.js"></script>
     <!-- Google Analytics -->
     <script>
-/*
+      /*
     (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function() {
@@ -83,162 +104,280 @@
     ga('create', 'UA-85617614-1', 'auto');
     ga('send', 'pageview');
 */
-
     </script>
-</head>
+  </head>
 
-<body id='1'>
+  <body id="1">
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 6 13"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xml:space="preserve"
+      xmlns:serif="http://www.serif.com/"
+      style="
+        fill-rule: evenodd;
+        clip-rule: evenodd;
+        stroke-linejoin: round;
+        stroke-miterlimit: 2;
+        display: none;
+      "
+    >
+      <g id="person" transform="matrix(0.0513612,0,0,0.0513612,0,-2.55123e-06)">
+        <path
+          d="M22.964,117.278L77.056,117.278L77.056,74.858C77.649,76.075 78.246,77.469 78.836,79.094C81.654,86.907 84.027,99.727 84.017,119.735C84.017,125.249 83.84,131.307 83.451,137.96C83.195,142.368 86.561,146.155 90.973,146.411C91.13,146.421 91.287,146.425 91.444,146.425C95.65,146.425 99.178,143.144 99.426,138.892C99.827,131.958 100.017,125.593 100.017,119.736C99.977,89.552 95.155,72.847 88.582,62.804C85.296,57.82 81.453,54.62 77.903,52.847C74.482,51.124 71.476,50.736 69.673,50.716C69.558,50.71 69.444,50.698 69.326,50.698L30.692,50.698C30.586,50.698 30.484,50.71 30.379,50.714C28.581,50.732 25.556,51.112 22.112,52.849C16.733,55.515 10.934,61.351 6.875,71.687C2.771,82.067 0.012,97.073 0,119.733C0,125.591 0.188,131.958 0.595,138.891C0.844,143.143 4.369,146.424 8.574,146.424C8.73,146.424 8.888,146.42 9.049,146.41C13.459,146.15 16.826,142.365 16.569,137.957C16.177,131.303 16,125.246 16,119.733C15.965,95.516 19.495,81.913 22.964,74.815L22.964,117.278Z"
+          style="fill-rule: nonzero;"
+        />
+        <path
+          d="M77.056,119.778L22.964,119.778L22.964,224.819C22.964,231.649 28.501,237.182 35.327,237.182C42.155,237.182 47.692,231.649 47.692,224.819L47.692,134.548L52.327,134.548L52.327,224.819C52.327,231.649 57.864,237.182 64.69,237.182C71.518,237.182 77.055,231.649 77.055,224.819L77.055,119.778L77.056,119.778Z"
+          style="fill-rule: nonzero;"
+        />
+        <path
+          d="M53.664,44.698C62.377,43.26 69.792,36.737 71.918,27.602C74.736,15.502 67.209,3.409 55.111,0.59C43.011,-2.224 30.918,5.299 28.099,17.4C25.283,29.498 32.808,41.591 44.908,44.408C45.407,44.523 45.906,44.617 46.405,44.697C48.867,45.1 51.313,45.086 53.664,44.698Z"
+          style="fill-rule: nonzero;"
+        />
+      </g>
+    </svg>
+
     <div id="share-modal"></div>
     <div class="header">
-        <div class="progress-bar">
-            <div class="progress-bar-color"></div>
-        </div>
-        <div class="header-wrapper">
-            <ul class="chapter-nav">
-                <li>
-                    <span onclick="openNav()" id="hamburger">&#9776; </span>
-                </li>
-                <!--<li><a href="../index.html" id="seeing-epidemiology">Seeing Epidemiology</a></li>-->
-                <li><a onclick='toTop()' id='display-chapter'>Chapter 1: Measure Disease Frequency</a></li>
-            </ul>
-        </div>
+      <div class="progress-bar">
+        <div class="progress-bar-color"></div>
+      </div>
+      <div class="header-wrapper">
+        <ul class="chapter-nav">
+          <li>
+            <span onclick="openNav()" id="hamburger">&#9776; </span>
+          </li>
+          <!--<li><a href="../index.html" id="seeing-epidemiology">Seeing Epidemiology</a></li>-->
+          <li>
+            <a onclick="toTop()" id="display-chapter"
+              >Chapter 1: Measure Disease Frequency</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="col-left">
-        <div class="col-left-wrapper">
-
-            <div id="section0">
-                <div class="chapter-intro">
-                    <h4>Chapter 1</h4>
-                    <h1>Measure Disease Frequency</h1>
-                    <p>This chapter explains some terms that describe the frequency of disease.</p>
-                </div>
-                <div class="scroll-down"> <img src="../img/button/bottom-arrow.svg"></div>
-            </div>
-
-            <div id="section1">
-                <div class="unit">
-                    <h3>Prevalence and Incidence</h3>
-                    <p>When talking about the epidemic, <em>prevalence</em> will be one of the most common term in daily life. It is pretty easy to calculate the prevalence, which is the proportion of a particular population that founded to be affected by a medical condition at a given time. Even prevalence could be used to describe an epidemic, it might also describe some non-infectious disease such as heart disease, or even risk factors such as smoking.</p>  
-                    <span id="centered">$$\text{Prevalence} = \frac{\text{number with the disease}}{\text{population size}}$$</span>
-                    <p><em>Incidence</em> (or <em>Incidence Risk</em>), correspondingly, is the proportion of new cases in the population that is at risk of a medical condition (not affected yet) at a given time. Generally prevalence indicates how widespread of the disease, while incidence indicates the spreading in a given time period.</p>
-                    <span id="centered">$$\text{Incidence} = \frac{\text{number of new cases of disease}}{\text{population size at risk}}$$</span>
-                    <div class="interactive-wrapper">
-                        <div id="controlHex">
-                            <div class="button-1" id="startHex">Submit</div>
-                            <div class="button-1" id="resetHex">Reset</div>
-                        </div>
-                        <p>Click and drag hexagons to select new cases then press "Submit" to see the Prevalence and Incidence. (To make life easier, we ignore the possibilities of death and recovery here.)</p>
-                    </div>
-                    <div id="pre_inc_table_wrapper" class="col-xs-3">
-                        <table id="pre_inc" class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td>Prevalence</td>
-                                    <td>Incidence</td>
-                                </tr>
-                                <tr>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div id="section2">
-                <div class="unit">
-                    <h3>Relationship Among Duration, Prevalence and Incidence Rate</h3>
-                    <p><em>Duration</em> is the time period that a case stays in the prevalent case pool. Bacause duration will vary from person to person, we usually use </em>average duration</em> for a certain disease in a population instead.</p>
-                    <p><em>Incidence Rate</em> is the average incidence in a given period of time.</p>
-                    <span id="centered">$$\text{Incidence Rate} = \frac{\text{incidence}}{\text{time period}}$$</span>
-                    <p>Prevalence(P) depends on the Incidence(I) and Duration(D):</p>
-                    <span id="centered">$$\frac{\text{P}}{\text{1-P}} \approx IR \times D$$</span>
-                    <p>If P is small enough then 1-P is close to 1, we have:</p>
-                    <span id="centered">$$P \approx IR \times D$$</span>
-                    <p>You could think about a pool with inflow and outflow. If incidence rate is the rate of inflow and duration is the time period for water staying in the pool, then the water level will indicate the prevalence.</p>
-                    <p>Suppose the total population is 100 and the visualization indicates final prevalence when incidence rate and duration rate is constant. You could drag bars below to adjust incidence rate and duration rate.</p>
-                    <div class="interactive-wrapper">
-                        <div id="inc_dur"></div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div id="section3">
-                <div class="unit">
-                    <h3>Case Fatality Rate</h3>
-                    <p>Besides of the frequency of affected, death could also be a factor when study the epidemic. For example, <em>Case Fatality Rate (CFR)</em> is the proportion of people with the condition who die in a given period of time. Similar to Incidence, which is the percentage of affected in the at-risk pool, Case fatality rate is the percentage of death in the affected pool.</p>
-                    
-                    <p>Intuitively, case fatality rate tells us how fatal a disease is. For example, the well-known Ebola virus has a case fatality rate from 83-90%. In the daily life, people usually describe the fatality of a given disease as "death rate", but in epidemiology death rate (or mortality rate) usually means the percentage of the people who die from a certain disease in a fixed population group such as nationality and race.</p>
-
-                </div>
-            </div>
-
+      <div class="col-left-wrapper">
+        <div id="section0">
+          <div class="chapter-intro">
+            <h4>Chapter 1</h4>
+            <h1>Measure Disease Frequency</h1>
+            <p>
+              This chapter explains some terms that describe the frequency of
+              disease.
+            </p>
+          </div>
+          <div class="scroll-down">
+            <img src="../img/button/bottom-arrow.svg" />
+          </div>
         </div>
 
-        <div class="action-buttons">
-            <ul>
-                <a id="share-button" >
-
-                    <li class="inline-share">
-                        <i class="fa fa-share-square-o action-icon" aria-hidden="true"></i>Share
-                    </li>
-                    <li><div id="share-modal"></div></li>
-
-                </a>
-
-            </ul>
-        </div>
-        <a href="../SIR-Model/index.html">
-            <div class="chapter-footer" id="next-chapter-color">
-                <div class="chapter-footer-wrapper">
-                    <h4>Next</h4>
-                    <p id='next-chapter'>SIR Model → </p>
-                </div>
+        <div id="section1">
+          <div class="unit">
+            <h3>Prevalence and Incidence</h3>
+            <p>
+              When talking about the epidemic, <em>prevalence</em> will be one
+              of the most common term in daily life. It is pretty easy to
+              calculate the prevalence, which is the proportion of a particular
+              population that founded to be affected by a medical condition at a
+              given time. Even prevalence could be used to describe an epidemic,
+              it might also describe some non-infectious disease such as heart
+              disease, or even risk factors such as smoking.
+            </p>
+            <span id="centered"
+              >$$\text{Prevalence} = \frac{\text{number with the
+              disease}}{\text{population size}}$$</span
+            >
+            <p>
+              <em>Incidence</em> (or <em>Incidence Risk</em>), correspondingly,
+              is the proportion of new cases in the population that is at risk
+              of a medical condition (not affected yet) at a given time.
+              Generally prevalence indicates how widespread of the disease,
+              while incidence indicates the spreading in a given time period.
+            </p>
+            <span id="centered"
+              >$$\text{Incidence} = \frac{\text{number of new cases of
+              disease}}{\text{population size at risk}}$$</span
+            >
+            <div class="interactive-wrapper">
+              <div id="controlHex">
+                <div class="button-1" id="startHex">Submit</div>
+                <div class="button-1" id="resetHex">Reset</div>
+              </div>
+              <p>
+                Click and drag hexagons to select new cases then press "Submit"
+                to see the Prevalence and Incidence. (To make life easier, we
+                ignore the possibilities of death and recovery here.)
+              </p>
             </div>
-        </a>
+            <div id="pre_inc_table_wrapper" class="col-xs-3">
+              <table id="pre_inc" class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td>Prevalence</td>
+                    <td>Incidence</td>
+                  </tr>
+                  <tr>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="section2">
+          <div class="unit">
+            <h3>Relationship Among Duration, Prevalence and Incidence Rate</h3>
+            <p>
+              <em>Duration</em> is the time period that a case stays in the
+              prevalent case pool. Bacause duration will vary from person to
+              person, we usually use <em>average duration</em> for a certain
+              disease in a population instead.
+            </p>
+            <p>
+              <em>Incidence Rate</em> is the average incidence in a given period
+              of time.
+            </p>
+            <span id="centered"
+              >$$\text{Incidence Rate} = \frac{\text{incidence}}{\text{time
+              period}}$$</span
+            >
+            <p>Prevalence(P) depends on the Incidence(I) and Duration(D):</p>
+            <span id="centered"
+              >$$\frac{\text{P}}{\text{1-P}} \approx IR \times D$$</span
+            >
+            <p>If P is small enough then 1-P is close to 1, we have:</p>
+            <span id="centered">$$P \approx IR \times D$$</span>
+            <p>
+              You could think about a pool with inflow and outflow. If incidence
+              rate is the rate of inflow and duration is the time period for
+              water staying in the pool, then the water level will indicate the
+              prevalence.
+            </p>
+            <p>
+              Suppose the total population is 100 and the visualization
+              indicates final prevalence when incidence rate and duration rate
+              is constant. You could drag bars below to adjust incidence rate
+              and duration rate.
+            </p>
+            <div class="interactive-wrapper">
+              <div id="inc_dur"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="section3">
+          <div class="unit">
+            <h3>Case Fatality Rate</h3>
+            <p>
+              Besides of the frequency of affected, death could also be a factor
+              when study the epidemic. For example,
+              <em>Case Fatality Rate (CFR)</em> is the proportion of people with
+              the condition who die in a given period of time. Similar to
+              Incidence, which is the percentage of affected in the at-risk
+              pool, Case fatality rate is the percentage of death in the
+              affected pool.
+            </p>
+
+            <p>
+              Intuitively, case fatality rate tells us how fatal a disease is.
+              For example, the well-known Ebola virus has a case fatality rate
+              from 83-90%. In the daily life, people usually describe the
+              fatality of a given disease as "death rate", but in epidemiology
+              death rate (or mortality rate) usually means the percentage of the
+              people who die from a certain disease in a fixed population group
+              such as nationality and race.
+            </p>
+
+            <span id="cfr_equation"
+              >$$\text{CFR} = \frac{\text{Fatal Cases}}{\text{Detected Cases}}$$
+            </span>
+            <p>
+              You could click the figure on the right to control its status and
+              check the current CFR in the population. Purple means detected
+              while red means fatal.
+            </p>
+
+            <p id="fatal" style="text-align: center;">Current Fatal Cases: 0</p>
+            <p id="detected" style="text-align: center;">
+              Current Detected Cases: 0
+            </p>
+            <p id="cfr" style="text-align: center;">Current CFR: N/A</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <ul>
+          <a id="share-button">
+            <li class="inline-share">
+              <i class="fa fa-share-square-o action-icon" aria-hidden="true"></i
+              >Share
+            </li>
+            <li><div id="share-modal"></div></li>
+          </a>
+        </ul>
+      </div>
+      <a href="../SIR-Model/index.html">
+        <div class="chapter-footer" id="next-chapter-color">
+          <div class="chapter-footer-wrapper">
+            <h4>Next</h4>
+            <p id="next-chapter">SIR Model →</p>
+          </div>
+        </div>
+      </a>
     </div>
     <div class="col-right">
-        <div class='language-setting'>
-            <select class="languageSetting">
-                <option selected>English</option>
-                <option data-url="cn.html">中文</option>
-            </select>
+      <div class="language-setting">
+        <select class="languageSetting">
+          <option selected>English</option>
+          <option data-url="cn.html">中文</option>
+        </select>
+      </div>
+      <div class="nav-section" id="section-0">
+        <div class="nav-unit-wrapper" id="one">
+          <span class="nav-unit-title"> Prevalence and Incidence </span>
         </div>
-        <div class="nav-section" id="section-0">
-            <div class="nav-unit-wrapper" id='one'>
-                <span class="nav-unit-title"> Prevalence and Incidence </span>
-            </div>
-            <div class="nav-unit-wrapper" id='two'>
-                <span class="nav-unit-title"> Relationship Among Duration, Prevalence and Incidence Rate </span>
-            </div>
-            <div class="nav-unit-wrapper" id='three'>
-                <span class="nav-unit-title"> Case Fatality Rate </span>
-            </div>
+        <div class="nav-unit-wrapper" id="two">
+          <span class="nav-unit-title">
+            Relationship Among Duration, Prevalence and Incidence Rate
+          </span>
         </div>
-        <div class="visualization-section" id="section-1">
-            <div class="visualization-wrapper" id="svgHex"></div>
+        <div class="nav-unit-wrapper" id="three">
+          <span class="nav-unit-title"> Case Fatality Rate </span>
         </div>
-        <div class="visualization-section" id="section-2">
-            <div class="visualization-wrapper" id="svgPool"></div>
-        </div>
+      </div>
+      <div class="visualization-section" id="section-1">
+        <div class="visualization-wrapper" id="svgHex"></div>
+      </div>
+      <div class="visualization-section" id="section-2">
+        <div class="visualization-wrapper" id="svgPool"></div>
+      </div>
+      <div class="visualization-section" id="section-3">
+        <div class="visualization-wrapper" id="svgPeople"></div>
+      </div>
     </div>
     <div id="overlay">
-        <div class="modal-header">
-            <div class="closebtn" onclick="closeNav()">&times;</div>
-            <ul>
-                <li>
-                    <select class="languageSetting">
-                        <option selected>English</option>
-                        <option data-url="cn.html">中文</option>
-                    </select>
-                </li>
-                <!--<li><a href="../index.html">HOME</a></li>-->
-            </ul>
-        </div>
-        <!--
+      <div class="modal-header">
+        <div class="closebtn" onclick="closeNav()">&times;</div>
+        <ul>
+          <li>
+            <select class="languageSetting">
+              <option selected>English</option>
+              <option data-url="cn.html">中文</option>
+            </select>
+          </li>
+          <!--<li><a href="../index.html">HOME</a></li>-->
+        </ul>
+      </div>
+      <!--
         <div class="modal-wrapper">
             <div class="modal-chapter">
                 <div id="chapter-text"><span>CHAPTER</span></div>
@@ -341,35 +480,34 @@
     <div id="share"></div>
     <!-- Share CSS and JavaScript -->
     <link rel="stylesheet" type="text/css" href="../css/jssocials.css" />
-    <link rel="stylesheet" type="text/css" href="../css/jssocials-theme-flat.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../css/jssocials-theme-flat.css"
+    />
     <script src="../js/jssocials.min.js"></script>
     <script>
-       
+      $("#share").jsSocials({
+        // url: "_url_",
+        // _createShareLink: function(share) {
+        //     var $result = jsSocials.Socials.prototype._createShareLink.apply(this, arguments);
+        //     $result.on("click", function() {
+        //           // replace the your placeholder with actual url
+        //           var href = $result.attr("href");
+        //           $result.attr("href", href.replace("_url_", shareUrl));
+        //     });
+        //     return $result;
+        // },
+        showLabel: false,
+        showCount: false,
+        shareIn: "popup",
+        shares: ["email", "twitter", "facebook", "googleplus", "linkedin"],
+      });
 
-        $("#share").jsSocials({
-            // url: "_url_",
-            // _createShareLink: function(share) {
-            //     var $result = jsSocials.Socials.prototype._createShareLink.apply(this, arguments);
-            //     $result.on("click", function() {
-            //           // replace the your placeholder with actual url
-            //           var href = $result.attr("href");
-            //           $result.attr("href", href.replace("_url_", shareUrl));
-            //     });
-            //     return $result;
-            // },
-            showLabel: false,
-            showCount: false,
-            shareIn: "popup",
-            shares: ["email", "twitter", "facebook", "googleplus", "linkedin"]
-        });
-
-        
-
-        $(".languageSetting").change(function() {
-          var option = $(this).find('option:selected');
-          window.location.href = option.data("url");
-        });
+      $(".languageSetting").change(function () {
+        var option = $(this).find("option:selected");
+        window.location.href = option.data("url");
+      });
     </script>
-</body>
-
+  </body>
 </html>
