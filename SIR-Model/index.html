@@ -17,7 +17,7 @@
 -->
 
 <!DOCTYPE html>
-<html lang="ch">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -27,13 +27,13 @@
     <!-- For Facebook Sharing -->
     <meta
       property="og:url"
-      content="https://sheronw.xyz/Seeing-Epidemiology/Measure-Disease-Frequency/cn.html"
+      content="https://sheronw.xyz/Seeing-Epidemiology/SIR-Model/"
     />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="疾病频率的测量" />
+    <meta property="og:title" content="SIR Model" />
     <meta
       property="og:description"
-      content="本章解释了一些用来描述疾病频率的术语。"
+      content="This chapter introduces SIR model, a model for spread of disease in Epidemiology, and some related terms."
     />
     <!--
     <meta
@@ -43,7 +43,8 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     -->
-    <title>疾病频率的测量 - 看见流行病学</title>
+
+    <title>SIR Model - Seeing Epidemiology</title>
     <!-- CSS Imports -->
     <!--Fonts-->
     <link
@@ -61,11 +62,7 @@
     <!-- General Chapter -->
     <link rel="stylesheet" type="text/css" href="../css/chapter-style.css" />
     <!-- Specific Chapter -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="Measure-Disease-Frequency.css"
-    />
+    <link rel="stylesheet" type="text/css" href="SIR-Model.css" />
     <!-- JavaScript Imports -->
     <!-- D3 -->
     <script src="../js/d3.min.js"></script>
@@ -84,8 +81,6 @@
     <script src="../js/d3.tip.v0.6.3.js"></script>
     <!-- General Chapter -->
     <script src="../js/chapter.js"></script>
-    <!-- D3 Hexbin -->
-    <script src="../js/d3.hexbin.min.js"></script>
     <!-- Visualizations -->
     <script src="Measure-Disease-Frequency.js"></script>
     <!-- Google Analytics -->
@@ -154,7 +149,7 @@
           </li>
           <!--<li><a href="../index.html" id="seeing-epidemiology">Seeing Epidemiology</a></li>-->
           <li>
-            <a onclick="toTop()" id="display-chapter">第一章：疾病频率的测量</a>
+            <a onclick="toTop()" id="display-chapter">Chapter 2: SIR Model</a>
           </li>
         </ul>
       </div>
@@ -164,10 +159,11 @@
       <div class="col-left-wrapper">
         <div id="section0">
           <div class="chapter-intro">
-            <h4>第一章</h4>
-            <h1>疾病频率的测量</h1>
+            <h4>Chapter 2</h4>
+            <h1>SIR Model</h1>
             <p>
-              本章解释了一些用来描述疾病频率的术语。
+              This chapter introduces SIR model, a model for spread of disease
+              in Epidemiology, and some related terms.
             </p>
           </div>
           <div class="scroll-down">
@@ -177,39 +173,48 @@
 
         <div id="section1">
           <div class="unit">
-            <h3>患病率与发病率</h3>
+            <h3>R<sub>0</sub></h3>
             <p>
-              <em>患病率（Prevalence）</em
-              >是讨论疫情时最常见的词之一。患病率的计算非常容易，即给定时间与人口范围，患有某病的人口比例。除了疫情之外，患病率也可以用来描述心脏病这样的非传染性疾病，或者吸烟产生的风险。
+              When talking about the epidemic, <em>prevalence</em> will be one
+              of the most common term in daily life. It is pretty easy to
+              calculate the prevalence, which is the proportion of a particular
+              population that founded to be affected by a medical condition at a
+              given time. Even prevalence could be used to describe an epidemic,
+              it might also describe some non-infectious disease such as heart
+              disease, or even risk factors such as smoking.
             </p>
             <span id="centered"
-              >$$\text{患病率} =
-              \frac{\text{总病例数}}{\text{总危险人口}}$$</span
+              >$$\text{Prevalence} = \frac{\text{number with the
+              disease}}{\text{population size}}$$</span
             >
             <p>
-              相应地，<em>累计发病率（Incidence）</em> 或危险性（Incidence
-              Risk），则是给定时间与人口范围，发病者的人口比例。
-              一般来说患病率用来描述疾病的广泛性，而累计发病率用来描述给定时间内的传播情况。
+              <em>Incidence</em> (or <em>Incidence Risk</em>), correspondingly,
+              is the proportion of new cases in the population that is at risk
+              of a medical condition (not affected yet) at a given time.
+              Generally prevalence indicates how widespread of the disease,
+              while incidence indicates the spreading in a given time period.
             </p>
             <span id="centered"
-              >$$\text{累计发病率} =
-              \frac{\text{发病病例数}}{\text{总危险人口中无病者人数}}$$</span
+              >$$\text{Incidence} = \frac{\text{number of new cases of
+              disease}}{\text{population size at risk}}$$</span
             >
             <div class="interactive-wrapper">
               <div id="controlHex">
-                <div class="button-1" id="startHex">提交</div>
-                <div class="button-1" id="resetHex">重置</div>
+                <div class="button-1" id="startHex">Submit</div>
+                <div class="button-1" id="resetHex">Reset</div>
               </div>
               <p>
-                请通过点击或拖动六边形来选取新增病例，然后点击「提交」来获得当前患病率与累计发病率（本演示中忽略了死亡与康复的情况）。
+                Click and drag hexagons to select new cases then press "Submit"
+                to see the Prevalence and Incidence. (To make life easier, we
+                ignore the possibilities of death and recovery here.)
               </p>
             </div>
             <div id="pre_inc_table_wrapper" class="col-xs-3">
               <table id="pre_inc" class="table table-bordered">
                 <tbody>
                   <tr>
-                    <td>患病率</td>
-                    <td>累计发病率</td>
+                    <td>Prevalence</td>
+                    <td>Incidence</td>
                   </tr>
                   <tr>
                     <td>0</td>
@@ -223,40 +228,46 @@
 
         <div id="section2">
           <div class="unit">
-            <h3>持续时间、患病率与发病率之间的关系</h3>
+            <h3>Relationship Among Duration, Prevalence and Incidence Rate</h3>
             <p>
-              <em>持续时间（Duration）</em>
-              是一个病例属于患病人口的时长（即从发病开始直到康复、死亡或脱离危险人口所用的时间）。
-              因为持续时间因人而异，所以一般用平均持续时间（Average
-              Duration）来代表研究特定群体与疾病中的持续时间。
+              <em>Duration</em> is the time period that a case stays in the
+              prevalent case pool. Because duration will vary from person to
+              person, we usually use <em>average duration</em> for a certain
+              disease in a population instead.
             </p>
             <p>
-              <em>发病率（Incidence Rate）</em>
-              指一个群体中的平均到每个时间单位内的累计发病率。
+              <em>Incidence Rate</em> is the average incidence in a given period
+              of time.
             </p>
             <span id="centered"
-              >$$\text{发病率} =
-              \frac{\text{特定时间段内的累计发病病例数}}{\text{时长}}$$</span
+              >$$\text{Incidence Rate} = \frac{\text{incidence}}{\text{time
+              period}}$$</span
             >
-            <p>患病率（P）与发病率（IR）与持续时间（D）有关：</p>
+            <p>
+              Prevalence(P) depends on the Incidence Rate(IR) and Duration(D):
+            </p>
             <span id="centered"
               >$$\frac{\text{P}}{\text{1-P}} \approx IR \times D$$</span
             >
-            <p>如果P足够小，那么1-P近似于1，得：</p>
+            <p>If P is small enough then 1-P is close to 1, we have:</p>
             <span id="centered">$$P \approx IR \times D$$</span>
             <p>
-              想象一个有着进水口与排水口的池塘：如果发病率是进水的速率而持续时间是所有水分子能够留在池塘内的平均时长，
-              那么水位高度就能够代表患病率。
+              You could think about a pool with inflow and outflow. If incidence
+              rate is the rate of inflow and duration is the time period for
+              water staying in the pool, then the water level will indicate the
+              prevalence.
             </p>
             <p>
-              这里假设危险人口的总数为100，则右图代表发病率与持续时间保持稳定后的最终患病率。
-              发病率和持续时间可以用下方柱状图高度来调节。
+              Suppose the total population is 100 and the visualization
+              indicates final prevalence when incidence rate and duration rate
+              is constant. You could drag bars below to adjust incidence rate
+              and duration rate.
             </p>
             <div class="interactive-wrapper">
               <div
                 id="inc_dur"
-                label1="发病率（病例/天）"
-                label2="持续时间（天）"
+                label1="Incidence Rate(cases/day)"
+                label2="Duration(days)"
               ></div>
             </div>
           </div>
@@ -264,37 +275,44 @@
 
         <div id="section3">
           <div class="unit">
-            <h3>病死率</h3>
+            <h3>Case Fatality Rate</h3>
             <p>
-              除了受影响的频率之外，死亡也是在疫情中需要研究的一个因素。比如，<em
-                >病死率（Case Fatality Rate，简称CFR）</em
-              >
-              是指特定时间段内，因病死亡的人口占总患病人口的比例，和表示危险人口中新增患病人口的累计发病率类似。
+              Besides of the frequency of affected, death could also be a factor
+              when study the epidemic. For example,
+              <em>Case Fatality Rate (CFR)</em> is the proportion of people with
+              the condition who die in a given period of time. Similar to
+              Incidence, which is the percentage of affected in the at-risk
+              pool, Case fatality rate is the percentage of death in the
+              affected pool.
             </p>
 
             <p>
-              直观地说，病死率能够告诉我们一种疾病有多致命。比如，臭名昭著的埃博拉病毒的病死率为83%至90%。
-              日常生活中，人们一般会用「死亡率」来描述一种疾病的致命性，但值得一提的是，在流行病学中，「死亡率（Death
-              Rate）」一般代表一个固定群体（如一个国家或一个种族）中死亡人数占总人口的比例。
+              Intuitively, case fatality rate tells us how fatal a disease is.
+              For example, the well-known Ebola virus has a case fatality rate
+              from 83-90%. In the daily life, people usually describe the
+              fatality of a given disease as "death rate", but in epidemiology
+              death rate (or mortality rate) usually means the percentage of the
+              people who die from a certain disease in a fixed population group
+              such as nationality and race.
             </p>
 
             <span id="cfr_equation"
-              >$$\text{病死率} =
-              \frac{\text{死亡病例数}}{\text{检测到的患病病例数}}$$
+              >$$\text{CFR} = \frac{\text{Fatal Cases}}{\text{Detected Cases}}$$
             </span>
             <p>
-              点击右侧图标以控制其状态，然后观察当前人群中的病死率。在本演示中，紫色代表患病，红色代表死亡。
+              You could click the figure on the right to control its status and
+              check the current CFR in the population. Purple means detected
+              while red means fatal.
             </p>
-
             <div class="interactive-wrapper">
               <p id="fatal" style="text-align: center;">
-                当前死亡病例数：<em>0</em>
+                Current Fatal Cases: <em>0</em>
               </p>
               <p id="detected" style="text-align: center;">
-                当前检测到的患病病例数：<em>0</em>
+                Current Detected Cases: <em>0</em>
               </p>
               <p id="cfr" style="text-align: center;">
-                当前病死率：<em>N/A</em>
+                Current CFR: <em>N/A</em>
               </p>
               <div class="button-1" id="resetCFR">Reset</div>
             </div>
@@ -307,39 +325,40 @@
           <a id="share-button">
             <li class="inline-share">
               <i class="fa fa-share-square-o action-icon" aria-hidden="true"></i
-              >分享
+              >Share
             </li>
             <li><div id="share-modal"></div></li>
           </a>
         </ul>
       </div>
-      <a href="../SIR-Model/cn.html">
+      <!--
+      <a href="../SIR-Model/index.html">
         <div class="chapter-footer" id="next-chapter-color">
           <div class="chapter-footer-wrapper">
-            <h4>下一章</h4>
-            <p id="next-chapter">SIR模型 →</p>
+            <h4>Next</h4>
+            <p id="next-chapter">SIR Model →</p>
           </div>
         </div>
-      </a>
+      </a>-->
     </div>
     <div class="col-right">
       <div class="language-setting">
         <select class="languageSetting">
-          <option selected>中文</option>
-          <option data-url="index.html">English</option>
+          <option selected>English</option>
+          <option data-url="cn.html">中文</option>
         </select>
       </div>
       <div class="nav-section" id="section-0">
         <div class="nav-unit-wrapper" id="one">
-          <span class="nav-unit-title"> 患病率与发病率 </span>
+          <span class="nav-unit-title"> Prevalence and Incidence </span>
         </div>
         <div class="nav-unit-wrapper" id="two">
           <span class="nav-unit-title">
-            持续时间、患病率与发病率之间的关系
+            Relationship Among Duration, Prevalence and Incidence Rate
           </span>
         </div>
         <div class="nav-unit-wrapper" id="three">
-          <span class="nav-unit-title"> 病死率 </span>
+          <span class="nav-unit-title"> Case Fatality Rate </span>
         </div>
       </div>
       <div class="visualization-section" id="section-1">
@@ -358,8 +377,8 @@
         <ul>
           <li>
             <select class="languageSetting">
-              <option selected>中文</option>
-              <option data-url="index.html">English</option>
+              <option selected>English</option>
+              <option data-url="cn.html">中文</option>
             </select>
           </li>
           <!--<li><a href="../index.html">HOME</a></li>-->
