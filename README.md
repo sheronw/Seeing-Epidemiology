@@ -1,4 +1,4 @@
-# [Seeing Epidemiology](http://sheronw.xyz/Seeing-Epidemiology/)
+# [Seeing Epidemiology](https://sheronw.xyz/Seeing-Epidemiology/Measure-Disease-Frequency/)
 
 ## Reference
 
