@@ -175,28 +175,26 @@
           <div class="unit">
             <h3>R<sub>0</sub></h3>
             <p>
-              When talking about the epidemic, <em>prevalence</em> will be one
-              of the most common term in daily life. It is pretty easy to
-              calculate the prevalence, which is the proportion of a particular
-              population that founded to be affected by a medical condition at a
-              given time. Even prevalence could be used to describe an epidemic,
-              it might also describe some non-infectious disease such as heart
-              disease, or even risk factors such as smoking.
+              R<sub>0</sub>, or <em>basic reproductive number</em>, is the
+              average number of people who get infected from one single case of
+              a certain disease in "the zero state", which means nobody else in
+              the group is immunized or infected. In Epidemiology, we use
+              R<sub>e</sub>, or <em>effective reproduction number</em>, to
+              denote the average number of people who get infected from one
+              single case in a "given state" (for example, at a given time t).
             </p>
-            <span id="centered"
-              >$$\text{Prevalence} = \frac{\text{number with the
-              disease}}{\text{population size}}$$</span
-            >
             <p>
-              <em>Incidence</em> (or <em>Incidence Risk</em>), correspondingly,
-              is the proportion of new cases in the population that is at risk
-              of a medical condition (not affected yet) at a given time.
-              Generally prevalence indicates how widespread of the disease,
-              while incidence indicates the spreading in a given time period.
+              But usually, just a single R<sub>0</sub> could give us a picture
+              about how infectious the disease is. Suppose one person in a party
+              is the first case of a disease and its R<sub>0</sub> is 2, then
+              there will be about two people in the party got this disease. When
+              they go back home, each of them will spread the disease to their
+              two family members and so on.
             </p>
             <span id="centered"
-              >$$\text{Incidence} = \frac{\text{number of new cases of
-              disease}}{\text{population size at risk}}$$</span
+              >$$\text{In theory, } \begin{cases} R_0&lt1, \text{it will finally
+              die out without control} \\ R_0=1, \text{it will grow gradually}
+              \\ R_0&gt1, \text{there will be an outbreak}\end{cases}$$</span
             >
             <div class="interactive-wrapper">
               <div id="controlHex">
@@ -204,9 +202,8 @@
                 <div class="button-1" id="resetHex">Reset</div>
               </div>
               <p>
-                Click and drag hexagons to select new cases then press "Submit"
-                to see the Prevalence and Incidence. (To make life easier, we
-                ignore the possibilities of death and recovery here.)
+                Use slider below to change R<sub>0</sub> in the graph and
+                observe the difference.
               </p>
             </div>
             <div id="pre_inc_table_wrapper" class="col-xs-3">
